@@ -1,5 +1,7 @@
 import React from 'react';
 import './App.css';
+import { Link } from 'react-router-dom';
+
 
 function App() {
   return (
@@ -15,7 +17,7 @@ function App() {
         <button type="submit">Login</button>
       </form>
       <div className="signup">
-        No account? <a href="register.html">Sign up here.</a>
+      <p>No account? <Link to="/register">Sign up here.</Link></p>
       </div>
     </div>
   );

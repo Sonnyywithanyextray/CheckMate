@@ -1,0 +1,55 @@
+/* Register.css */
+body {
+    background-color: #333;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0
+  }
+  
+  /* Main container for register elements */
+  .register-container {
+    background-color: #444;
+    padding: 40px; 
+    border-radius: 8px; 
+    text-align: center; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+  input[type="email"], input[type="password"] {
+    width: 280px;
+    padding: 8px 10px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 5px;
+    display: block;
+  }
+  
+  button {
+    width: 200px;
+    padding: 10px;
+    background-color: #2EC1AC; 
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: block;
+    margin: 20px auto;
+  }
+  
+  button:hover {
+    background-color: #28a896;
+  }
+  
+  p {
+    color: #fff;
+  }
+  
+  /* Tagline color customization */
+.tagline {
+    color: #2EC1AC; 
+}
