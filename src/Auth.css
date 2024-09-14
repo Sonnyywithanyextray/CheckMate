@@ -1,0 +1,101 @@
+/* src/Auth.css */
+
+/* Overall Page Styling */
+body {
+    background-color: #333;
+    font-family: Arial, sans-serif;
+    color: #fff; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0; 
+}
+
+/* Login and Register Containers */
+.login-container, .register-container {
+    background-color: #444;
+    padding: 40px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    width: 400px; 
+    margin: auto;
+    margin-top: 50px;
+}
+
+/* Logo and Heading Styling */
+.logo img {
+    width: 50px; 
+    vertical-align: middle;
+    margin-right: 10px;
+}
+
+/* Heading */
+.login-container h1, .register-container h1 {
+    display: inline; 
+    font-size: 28px; 
+    color: #2EC1AC;
+    margin-bottom: 20px;
+}
+
+/* Tagline */
+.tagline {
+    margin-bottom: 20px;
+    color: #fff;
+    font-size: 16px;
+}
+
+/* Form Styling */
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+}
+
+form input {
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    width: 80%; 
+}
+
+/* Button Styling */
+form button {
+    width: 50%; 
+    padding: 8px 0; 
+    background-color: #2EC1AC;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px; 
+    margin-top: 8px; 
+}
+
+form button:hover {
+    background-color: #45a049;
+}
+
+/* Error Message */
+.error {
+    color: red;
+    margin-bottom: 10px;
+}
+
+/* Signup Section */
+.signup p {
+    margin-top: 10px;
+    color: #fff;
+}
+
+.signup a {
+    color: #2EC1AC;
+    text-decoration: none;
+}
+
+.signup a:hover {
+    text-decoration: underline;
+}

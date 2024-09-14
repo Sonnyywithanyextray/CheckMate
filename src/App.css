@@ -52,7 +52,7 @@ input[type="password"] {
 /* Focus styling for inputs */
 input[type="text"]:focus,
 input[type="password"]:focus {
-    outline: none; /* Removes default focus outline */
+    outline: none; 
     border: 2px solid #2EC1AC; /* Green border on focus */
 }
 
