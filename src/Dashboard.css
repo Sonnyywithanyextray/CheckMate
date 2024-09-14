@@ -1,38 +1,174 @@
 /* src/Dashboard.css */
 
 .dashboard-container {
-    background-color: #444;
-    padding: 40px;
+    background-color: #444; /* Darker background */
+    padding: 40px; /* Match the padding of the Auth containers */
     border-radius: 8px;
     text-align: center;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-    width: 400px;
+    width: 800px; /* Increased width to accommodate more content */
     margin: auto;
     margin-top: 50px;
     color: #fff;
-  }
-  
-  .dashboard-container h1 {
+    position: relative; /* For positioning logout button */
+}
+
+.dashboard-container .content {
     margin-bottom: 20px;
+}
+
+.dashboard-container h1 {
     color: #2EC1AC;
-  }
-  
-  .dashboard-container p {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
+    font-size: 24px; /* Adjust if needed to match Auth styling */
+}
+
+.dashboard-container p {
     font-size: 18px;
-  }
-  
-  .dashboard-container button {
+    margin-bottom: 20px;
+}
+
+.dashboard-container label {
+    display: block;
+    text-align: left; /* Align text to the left */
+    width: 80%; /* Ensure the label width matches the input and textarea */
+    margin: 0 auto 5px; /* Center alignment, space below */
+    color: #ccc;
+    font-size: 16px;
+}
+
+input[type="text"],
+textarea,
+select {
+    display: block;
+    width: 80%; /* Match input and label width */
+    padding: 10px;
+    margin: 10px auto; /* Center alignment and space around elements */
+    border-radius: 15px; /* Rounded edges */
+    border: none;
+    background: #fff;
+    color: #333;
+    font-size: 16px;
+}
+
+textarea {
+    height: 100px; /* Set fixed height */
+    resize: none; /* Disable resizing */
+}
+
+select {
+    height: 40px; /* Set height for select dropdown */
+}
+
+button {
     padding: 10px 20px;
     background-color: #2EC1AC;
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 15px; /* Rounded edges for buttons */
     cursor: pointer;
     font-size: 16px;
-  }
-  
-  .dashboard-container button:hover {
+    display: block;
+    margin: 20px auto;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+button:hover {
     background-color: #45a049;
-  }
-  
+    transform: scale(1.05); /* Slightly enlarge on hover */
+}
+
+button.logout-btn {
+    background-color: #f44336; /* Red color for logout */
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+button.cancel-btn {
+    background-color: #555555; /* Grey color for cancel */
+}
+
+button.cancel-btn:hover {
+    background-color: #777777;
+}
+
+.error {
+    color: red;
+    margin-bottom: 10px;
+}
+
+.word-count {
+    color: #ccc;
+    font-size: 14px;
+    margin-top: -10px; /* Adjust spacing as necessary */
+}
+
+.queued-reports {
+    margin-top: 40px;
+    text-align: left;
+}
+
+.queued-reports h2 {
+    color: #2EC1AC;
+    margin-bottom: 20px;
+}
+
+.queued-reports ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.queued-reports li {
+    background-color: #555;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    position: relative;
+}
+
+.queued-reports li a {
+    color: #2EC1AC;
+    text-decoration: none;
+}
+
+.queued-reports li a:hover {
+    text-decoration: underline;
+}
+
+.queued-reports button {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background-color: #2EC1AC;
+}
+
+.queued-reports button:hover {
+    background-color: #45a049;
+}
+
+.current-review {
+    background-color: #555;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+.current-review h2 {
+    color: #2EC1AC;
+    margin-bottom: 15px;
+}
+
+.current-review p {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.current-review a {
+    color: #2EC1AC;
+    text-decoration: none;
+}
+
+.current-review a:hover {
+    text-decoration: underline;
+}
