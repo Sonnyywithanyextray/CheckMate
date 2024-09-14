@@ -1,0 +1,91 @@
+/* body setup for overall page styling */
+body {
+    background-color: #333;
+    font-family: Arial, sans-serif;
+    color: #fff; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0; 
+}
+
+/* Main container for login elements */
+.login-container {
+    background-color: #444;
+    padding: 40px; 
+    border-radius: 8px; 
+    text-align: center; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); 
+}
+
+.logo img {
+    width: 50px; 
+}
+
+h1 {
+    margin: 10px 0; 
+}
+
+input[type="text"],
+input[type="password"] {
+    width: 280px;
+    padding: 8px 10px; 
+    margin-top: 8px; 
+    margin-bottom: 10px; 
+    border: none; 
+    border-radius: 5px; 
+    font-size: 16px; 
+    display: block;
+    margin-left: auto; 
+    margin-right: auto;
+    background: #fff; 
+    color: #333; 
+}
+
+/* Focus styling for inputs */
+input[type="text"]:focus,
+input[type="password"]:focus {
+    outline: none; /* Removes default focus outline */
+    border: 2px solid #2EC1AC; /* Green border on focus */
+}
+
+/* Button styling */
+button {
+    width: 200px; 
+    padding: 8px 10px;
+    margin-top: 12px; 
+    margin-bottom: 20px; 
+    background-color: #2EC1AC; 
+    color: white; 
+    border: none; 
+    border-radius: 5px; 
+    cursor: pointer; 
+    font-size: 16px;
+    display: block; 
+    margin-left: auto; 
+    margin-right: auto;
+}
+
+button:hover {
+    background-color: #45a049; 
+}
+
+/* Tagline color customization */
+.tagline {
+    color: #2EC1AC; 
+}
+
+/* Styling for the sign-up link area */
+.signup {
+    margin-top: 16px; 
+}
+
+.signup a {
+    color: #2EC1AC;
+    text-decoration: none; 
+}
+
+.signup a:hover {
+    text-decoration: underline; 
+}
