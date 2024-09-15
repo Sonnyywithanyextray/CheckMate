@@ -1,16 +1,16 @@
 /* src/Dashboard.css */
 
 .dashboard-container {
-    background-color: #444; /* Darker background */
-    padding: 40px; /* Match the padding of the Auth containers */
+    background-color: #444; 
+    padding: 40px; 
     border-radius: 8px;
     text-align: center;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-    width: 800px; /* Increased width to accommodate more content */
+    width: 800px; 
     margin: auto;
     margin-top: 50px;
     color: #fff;
-    position: relative; /* For positioning logout button */
+    position: relative; 
 }
 
 .dashboard-container .content {
@@ -20,7 +20,7 @@
 .dashboard-container h1 {
     color: #2EC1AC;
     margin-bottom: 10px;
-    font-size: 24px; /* Adjust if needed to match Auth styling */
+    font-size: 24px; 
 }
 
 .dashboard-container p {
@@ -30,9 +30,9 @@
 
 .dashboard-container label {
     display: block;
-    text-align: left; /* Align text to the left */
-    width: 80%; /* Ensure the label width matches the input and textarea */
-    margin: 0 auto 5px; /* Center alignment, space below */
+    text-align: left; 
+    width: 80%; 
+    margin: 0 auto 5px;
     color: #ccc;
     font-size: 16px;
 }
@@ -41,10 +41,10 @@ input[type="text"],
 textarea,
 select {
     display: block;
-    width: 80%; /* Match input and label width */
+    width: 80%; 
     padding: 10px;
-    margin: 10px auto; /* Center alignment and space around elements */
-    border-radius: 15px; /* Rounded edges */
+    margin: 10px auto; 
+    border-radius: 15px;
     border: none;
     background: #fff;
     color: #333;
@@ -52,12 +52,12 @@ select {
 }
 
 textarea {
-    height: 100px; /* Set fixed height */
-    resize: none; /* Disable resizing */
+    height: 100px;
+    resize: none; 
 }
 
 select {
-    height: 40px; /* Set height for select dropdown */
+    height: 40px;
 }
 
 button {
@@ -65,7 +65,7 @@ button {
     background-color: #2EC1AC;
     color: white;
     border: none;
-    border-radius: 15px; /* Rounded edges for buttons */
+    border-radius: 15px;
     cursor: pointer;
     font-size: 16px;
     display: block;
@@ -75,18 +75,18 @@ button {
 
 button:hover {
     background-color: #45a049;
-    transform: scale(1.05); /* Slightly enlarge on hover */
+    transform: scale(1.05); 
 }
 
 button.logout-btn {
-    background-color: #f44336; /* Red color for logout */
+    background-color: #f44336; 
     position: absolute;
     top: 20px;
     right: 20px;
 }
 
 button.cancel-btn {
-    background-color: #555555; /* Grey color for cancel */
+    background-color: #555555; 
 }
 
 button.cancel-btn:hover {
@@ -101,7 +101,7 @@ button.cancel-btn:hover {
 .word-count {
     color: #ccc;
     font-size: 14px;
-    margin-top: -10px; /* Adjust spacing as necessary */
+    margin-top: -10px; 
 }
 
 .queued-reports {

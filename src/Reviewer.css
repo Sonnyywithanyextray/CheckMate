@@ -1,0 +1,49 @@
+.reviewer-container {
+    background-color: #333;
+    width: 400px;
+    padding: 40px;
+    border-radius: 8px;
+    margin: 50px auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    color: #fff;
+  }
+  
+  .reviewer-container h1 {
+    margin-bottom: 20px;
+    color: #2EC1AC;
+  }
+  
+  .reviewer-container form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .reviewer-container label {
+    text-align: left;
+    margin-bottom: 5px;
+  }
+  
+  .reviewer-container textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: none;
+    resize: none; /* Prevent resizing of the textarea */
+  }
+  
+  .reviewer-container button {
+    padding: 10px 20px;
+    background-color: #2EC1AC;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .reviewer-container button:hover {
+    background-color: #45a049;
+  }
+  
