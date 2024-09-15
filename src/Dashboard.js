@@ -1,21 +1,10 @@
-// src/Dashboard.js
-
 import React, { useContext, useState, useEffect } from 'react';
 import { AuthContext } from './context/AuthContext';
-import { auth, firestore } from './firebase'; // Ensure Firestore is imported
-import { signOut } from "firebase/auth";
+import { firestore } from './firebase';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { 
-  collection, 
-  addDoc, 
-  query, 
-  where, 
-  onSnapshot, 
-  doc, 
-  updateDoc, 
-  serverTimestamp 
-} from 'firebase/firestore';
+import { collection, addDoc, query, where, onSnapshot, serverTimestamp } from 'firebase/firestore';
+import { FaUserCircle } from 'react-icons/fa';
 import './Dashboard.css';
 
 function Dashboard() {
@@ -27,43 +16,10 @@ function Dashboard() {
   const [reports, setReports] = useState([]);
   const [error, setError] = useState(null);
 
-  // Handle Logout
-  const handleLogout = async () => {
-    try {
-      await signOut(auth);
-      navigate('/');
-    } catch (err) {
-      console.error('Failed to logout:', err.message);
-      setError('Failed to logout. Please try again.');
-    }
-  };
-
-  // Animation variants for Framer Motion
-  const variants = {
-    initial: { opacity: 0, scale: 0.8 },
-    animate: { opacity: 1, scale: 1 },
-    exit: { opacity: 0, scale: 0.8 },
-  };
-
-  // Handle Description Change with Word Limit
-  const handleDescriptionChange = (event) => {
-    const inputWords = event.target.value.split(/\s+/);
-    if (inputWords.length <= wordLimit) {
-      setDescription(event.target.value);
-    } else {
-      setDescription(inputWords.slice(0, wordLimit).join(' '));
-    }
-  };
-
-  const remainingWords = wordLimit - description.split(/\s+/).filter(Boolean).length;
-
-  // Fetch Queued Reports in Real-Time
   useEffect(() => {
-    if (!currentUser) return; // Ensure user is authenticated
-
+    if (!currentUser) return;
     const reportsCollection = collection(firestore, 'reports');
     const q = query(reportsCollection, where('status', '==', 'queued'));
-
     const unsubscribe = onSnapshot(q, (snapshot) => {
       const fetchedReports = [];
       snapshot.forEach((docSnap) => {
@@ -74,30 +30,24 @@ function Dashboard() {
       console.error('Error fetching reports:', error);
       setError('Failed to fetch reports.');
     });
-
     return () => unsubscribe();
   }, [firestore, currentUser]);
 
-  // Handle Report Submission
   const handleReportSubmit = async (e) => {
     e.preventDefault();
     if (!link || !description) {
       setError('Please provide both link and description.');
       return;
     }
-
     try {
       await addDoc(collection(firestore, 'reports'), {
         link,
         description,
         status: 'queued',
         submittedBy: currentUser.uid,
-        assignedTo: null,
         createdAt: serverTimestamp(),
         updatedAt: serverTimestamp(),
-        result: null,
       });
-      console.log('Report submitted successfully.');
       setLink('');
       setDescription('');
       setError(null);
@@ -108,63 +58,45 @@ function Dashboard() {
     }
   };
 
-  // Assign a Report to the Current User and Navigate to Reviewer
-  const assignReport = async (reportId) => {
-    console.log(`Assigning report with ID: ${reportId}`);
-    const reportRef = doc(firestore, 'reports', reportId);
-    try {
-      await updateDoc(reportRef, {
-        status: 'in_review',
-        assignedTo: currentUser.uid,
-        updatedAt: serverTimestamp(),
-      });
-      console.log('Report status updated to "in_review". Navigating to Reviewer component.');
-      navigate(`/reviewer/${reportId}`);
-      console.log('Navigation successful.');
-    } catch (err) {
-      console.error('Error assigning report:', err);
-      setError('Failed to assign report. Please try again.');
-    }
+  const assignReport = (reportId) => {
+    navigate(`/reviewer/${reportId}`);
   };
-  
+
+  // Animation variants
+  const pageVariants = {
+    initial: { opacity: 0, x: '-100vw' },
+    in: { opacity: 1, x: 0 },
+    out: { opacity: 0, x: '100vw' },
+  };
+
+  const pageTransition = {
+    type: 'tween',
+    ease: 'anticipate',
+    duration: 0.5
+  };
+
   return (
-    <motion.div 
-      className="dashboard-container" 
-      variants={variants}
+    <motion.div
+      className="dashboard-container"
       initial="initial"
-      animate="animate"
-      exit="exit"
-      transition={{ duration: 0.5 }}
+      animate="in"
+      exit="out"
+      variants={pageVariants}
+      transition={pageTransition}
     >
+      <FaUserCircle className="account-icon"/>
       <div className="content">
         <h1>CheckMate Dashboard</h1>
         <p>Report and find out misinformation</p>
-
-        {/* Report Submission Form */}
         <form onSubmit={handleReportSubmit}>
           {error && <p className="error">{error}</p>}
           <label htmlFor="link">Link</label>
-          <input 
-            type="url" 
-            id="link"
-            placeholder="Link the source!" 
-            value={link} 
-            onChange={(e) => setLink(e.target.value)} 
-            required
-          />
+          <input type="url" id="link" placeholder="Link the source!" value={link} onChange={(e) => setLink(e.target.value)} required />
           <label htmlFor="description">Description</label>
-          <textarea 
-            id="description"
-            placeholder="Provide context to why you're reporting" 
-            value={description} 
-            onChange={handleDescriptionChange} 
-            required
-          />
-          <div className="word-count">Words left: {remainingWords}</div>
+          <textarea id="description" placeholder="Provide context to why you're reporting" value={description} onChange={(e) => setDescription(e.target.value)} required />
+          <div className="word-count">Words left: {description.split(/\s+/).filter(Boolean).length}/{wordLimit}</div>
           <button type="submit">Report</button>
         </form>
-
-        {/* Display Queued Reports */}
         <div className="queued-reports">
           <h2>Queued Reports</h2>
           {reports.length === 0 ? (
@@ -182,7 +114,6 @@ function Dashboard() {
           )}
         </div>
       </div>
-      <button className="logout-btn" onClick={handleLogout}>Logout</button>
     </motion.div>
   );
 }

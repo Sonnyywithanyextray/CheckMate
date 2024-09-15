@@ -7,10 +7,10 @@ import { motion } from 'framer-motion';
 import './Auth.css';
 
 function App() {
-  const [email, setEmail] = useState(''); // Changed from username to email
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
-  const navigate = useNavigate(); // useNavigate replaces useHistory in v6
+  const navigate = useNavigate(); 
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -47,11 +47,11 @@ function App() {
       {error && <p className="error">{error}</p>} {/* Display error messages */}
       
       <form onSubmit={handleLogin}>
-        {/* Change input type from text (username) to email */}
+        {/* Changed input type from text (username) to email */}
         <input
           type="email"
           placeholder="Enter email"
-          name="email" /* Update name attribute */
+          name="email" 
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required

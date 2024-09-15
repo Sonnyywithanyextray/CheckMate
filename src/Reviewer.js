@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { firestore, auth } from './firebase'; 
+import { firestore, auth } from './firebase';
 import { 
   doc, 
   getDoc, 
@@ -11,19 +11,22 @@ import {
 } from 'firebase/firestore';
 import { signOut } from "firebase/auth";
 import { AuthContext } from './context/AuthContext';
+import { FaArrowLeft, FaUserCircle } from 'react-icons/fa';
+import { motion } from 'framer-motion';
 import './Reviewer.css';
 
 function Reviewer() {
-  const { reportId } = useParams(); // Get reportId from URL
-  const { currentUser } = useContext(AuthContext); 
+  const { reportId } = useParams();
+  const { currentUser } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const [report, setReport] = useState(null); // State to hold report data
-  const [evidence, setEvidence] = useState(''); // State for evidence input
-  const [conclusions, setConclusions] = useState(''); // State for conclusions input
-  const [error, setError] = useState(null); // State for error messages
+  const [report, setReport] = useState(null);
+  const [evidence, setEvidence] = useState('');
+  const [conclusions, setConclusions] = useState('');
+  const [error, setError] = useState(null);
+  const [successMessage, setSuccessMessage] = useState(null);
+  const [showDropdown, setShowDropdown] = useState(false);
 
-  // Fetch report data when component mounts
   useEffect(() => {
     const fetchReport = async () => {
       if (!reportId) {
@@ -52,16 +55,20 @@ function Reviewer() {
     fetchReport();
   }, [reportId, firestore]);
 
-  // Handle review submission
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (!evidence || !conclusions) {
-      setError('Please provide both evidence and conclusions.');
+    if (!currentUser) {
+      setError('User is not authenticated. Please log in again.');
+      setSuccessMessage(null);
       return;
     }
-
+    if (!evidence || !conclusions) {
+      setError('Please provide both evidence and conclusions.');
+      setSuccessMessage(null);
+      return;
+    }
     try {
-      // Add review to 'reviews' collection
+      // Create the review
       const reviewDocRef = await addDoc(collection(firestore, 'reviews'), {
         reportId: report.id,
         reviewedBy: currentUser.uid,
@@ -70,25 +77,31 @@ function Reviewer() {
         createdAt: serverTimestamp(),
       });
       console.log('Review added with ID:', reviewDocRef.id);
-
-      // Update report status and result
-      await updateDoc(doc(firestore, 'reports', report.id), {
-        status: 'resolved',
+  
+      // Update the report
+      const reportRef = doc(firestore, 'reports', report.id);
+      const updatePayload = {
+        status: 'reviewed',
         result: classifyConclusion(conclusions),
-        updatedAt: serverTimestamp(), // Update updatedAt
-      });
-      console.log('Report updated to resolved.');
-
-      alert('Review submitted successfully!');
-      navigate('/dashboard'); // Redirect back to Dashboard after successful review
-      console.log('Navigated back to Dashboard.');
+        updatedAt: serverTimestamp(),
+      };
+  
+      await updateDoc(reportRef, updatePayload);
+      console.log('Report updated successfully with payload:', updatePayload);
+  
+      setError(null);
+      setSuccessMessage('Review submitted successfully!');
+  
+      setTimeout(() => {
+        navigate('/Dashboard');
+      }, 2000);
     } catch (err) {
       console.error('Error submitting review:', err);
-      setError('Failed to submit review.');
+      setError('Failed to submit review: ' + err.message);
+      setSuccessMessage(null);
     }
   };
-
-  // Helper function to classify conclusions
+    
   const classifyConclusion = (text) => {
     const lowerText = text.toLowerCase();
     if (lowerText.includes('misinformation')) return 'misinformation';
@@ -96,12 +109,11 @@ function Reviewer() {
     return 'more_context_needed';
   };
 
-  // Handle Logout
   const handleLogout = async () => {
     try {
-      await signOut(auth); // Sign out the user
+      await signOut(auth);
       console.log('User signed out successfully.');
-      navigate('/'); // Redirect to Login page after logout
+      navigate('/');
       console.log('Navigated to Login page.');
     } catch (err) {
       console.error('Failed to logout:', err.message);
@@ -109,68 +121,95 @@ function Reviewer() {
     }
   };
 
-  // Conditional rendering based on error and report data
-  if (error) {
-    return (
-      <div className="reviewer-container">
-        <h1>Reviewer Dashboard</h1>
-        <p className="error">{error}</p>
-        <button onClick={() => navigate('/dashboard')}>Back to Dashboard</button>
-        <button className="logout-btn" onClick={handleLogout}>Logout</button>
-      </div>
-    );
-  }
+  const handleBack = () => {
+    navigate('/dashboard');
+  };
 
-  if (!report) {
-    return (
-      <div className="reviewer-container">
-        <h1>Reviewer Dashboard</h1>
-        <p>Loading report...</p>
-        <button className="logout-btn" onClick={handleLogout}>Logout</button>
-      </div>
-    );
-  }
+  const pageVariants = {
+    initial: { opacity: 0, x: '100vw' },
+    in: { opacity: 1, x: 0 },
+    out: { opacity: 0, x: '-100vw' },
+  };
 
-  // Check if the current user is assigned to this report
-  if (report.assignedTo !== currentUser.uid) {
-    return (
-      <div className="reviewer-container">
-        <h1>Reviewer Dashboard</h1>
-        <p>You are not assigned to review this report.</p>
-        <button onClick={() => navigate('/dashboard')}>Back to Dashboard</button>
-        <button className="logout-btn" onClick={handleLogout}>Logout</button>
-      </div>
-    );
-  }
+  const pageTransition = {
+    type: 'tween',
+    ease: 'anticipate',
+    duration: 0.5
+  };
 
   return (
-    <div className="reviewer-container">
-      <h1>Transparency Logs</h1>
-      <h2>Review Report</h2>
-      <p><strong>Link:</strong> <a href={report.link} target="_blank" rel="noopener noreferrer">{report.link}</a></p>
-      <p><strong>Description:</strong> {report.description}</p>
-      <form onSubmit={handleSubmit}>
-        {error && <p className="error">{error}</p>}
-        <label htmlFor="evidence">Evidence and Sources</label>
-        <textarea
-          id="evidence"
-          value={evidence}
-          onChange={(e) => setEvidence(e.target.value)}
-          placeholder="Provide any URLs or references to the data or articles used to support or refute the claim."
-          required
-        />
-        <label htmlFor="conclusions">Conclusions</label>
-        <textarea
-          id="conclusions"
-          value={conclusions}
-          onChange={(e) => setConclusions(e.target.value)}
-          placeholder="Brief explanation of the review outcomes. What do you conclude?"
-          required
-        />
-        <button type="submit">Submit</button>
-      </form>
-      <button className="logout-btn" onClick={handleLogout}>Logout</button>
-    </div>
+    <>
+      <button 
+        onClick={handleBack} 
+        className="back-btn" 
+        aria-label="Back to Dashboard"
+      >
+        <FaArrowLeft />
+      </button>
+      <motion.div
+        className="reviewer-wrapper"
+        initial="initial"
+        animate="in"
+        exit="out"
+        variants={pageVariants}
+        transition={pageTransition}
+      >
+        <div className="reviewer-page">
+          <div className="reviewer-container">
+            <h1>Transparency Logs</h1>
+            <h2>Review Report</h2>
+            {error && <p className="error">{error}</p>}
+            {successMessage && <p className="success">{successMessage}</p>}
+            {report ? (
+              <>
+                <div className="report-field">
+                  <p className="report-label"><strong>Link:</strong></p>
+                  <p className="report-link">
+                    <a href={report.link} target="_blank" rel="noopener noreferrer">{report.link}</a>
+                  </p>
+                </div>
+                <div className="report-field">
+                  <p className="report-label"><strong>Description:</strong></p>
+                  <p className="report-description">{report.description}</p>
+                </div>
+                <form onSubmit={handleSubmit}>
+                  <label htmlFor="evidence">Evidence and Sources</label>
+                  <textarea
+                    id="evidence"
+                    value={evidence}
+                    onChange={(e) => setEvidence(e.target.value)}
+                    placeholder="Provide any URLs or references to the data or articles used to support or refute the claim."
+                    required
+                  />
+                  <label htmlFor="conclusions">Conclusions</label>
+                  <textarea
+                    id="conclusions"
+                    value={conclusions}
+                    onChange={(e) => setConclusions(e.target.value)}
+                    placeholder="Brief explanation of the review outcomes. What do you conclude?"
+                    required
+                  />
+                  <button type="submit">Submit</button>
+                </form>
+              </>
+            ) : (
+              <p>Loading report...</p>
+            )}
+          </div>
+        </div>
+        <div className="account-menu">
+          <FaUserCircle 
+            className="account-icon" 
+            onClick={() => setShowDropdown(!showDropdown)} 
+          />
+          {showDropdown && (
+            <div className="account-dropdown">
+              <button onClick={handleLogout}>Logout</button>
+            </div>
+          )}
+        </div>
+      </motion.div>
+    </>
   );
 }
 

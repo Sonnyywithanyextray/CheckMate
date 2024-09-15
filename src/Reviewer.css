@@ -1,49 +1,206 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow: visible;
+}
+
+body, #root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Global Box-Sizing */
+* {
+  box-sizing: border-box;
+}
+
+.reviewer-page {
+  position: relative;
+  padding-top: 20px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+}
+
 .reviewer-container {
-    background-color: #333;
-    width: 400px;
-    padding: 40px;
-    border-radius: 8px;
-    margin: 50px auto;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-    text-align: center;
-    color: #fff;
-  }
-  
-  .reviewer-container h1 {
-    margin-bottom: 20px;
-    color: #2EC1AC;
-  }
-  
-  .reviewer-container form {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .reviewer-container label {
-    text-align: left;
-    margin-bottom: 5px;
-  }
-  
-  .reviewer-container textarea {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 20px;
-    border-radius: 5px;
-    border: none;
-    resize: none; /* Prevent resizing of the textarea */
-  }
-  
-  .reviewer-container button {
-    padding: 10px 20px;
-    background-color: #2EC1AC;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-  }
-  
-  .reviewer-container button:hover {
-    background-color: #45a049;
-  }
-  
+  background-color: #333;
+  width: 90%;
+  max-width: 600px;
+  padding: 40px; /* Reduced top padding */
+  border-radius: 8px;
+  margin: 20px auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  text-align: center;
+  color: #fff;
+  position: relative;
+  flex: 1;
+  height: auto;
+  min-height: auto;
+}
+
+
+
+
+/* Report Field Styles */
+.report-field {
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+.report-label {
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.report-link a {
+  color: #2EC1AC;
+  text-decoration: none;
+}
+
+.report-link a:hover {
+  text-decoration: underline;
+}
+
+.back-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  color: #fff;
+  position: absolute;
+  top: 30px; 
+  left: 5%; 
+  padding: 0;
+  z-index: 10;
+}
+
+.back-btn:hover {
+  color: #ddd;
+}
+
+/* Header Styles */
+.reviewer-container h1 {
+  margin-bottom: 20px;
+  color: #2EC1AC;
+}
+
+.reviewer-container h2 {
+  margin-bottom: 20px;
+  color: #fff;
+}
+
+/* Form Styles */
+.reviewer-container form {
+  display: flex;
+  flex-direction: column;
+}
+
+.reviewer-container label {
+  text-align: left;
+  margin-bottom: 5px;
+  color: #fff;
+}
+
+.reviewer-container textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  border: none;
+  resize: vertical;
+}
+
+/* Submit Button Styles */
+.reviewer-container button[type="submit"] {
+  padding: 10px 20px;
+  background-color: #2EC1AC;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.reviewer-container button[type="submit"]:hover {
+  background-color: #45a049;
+}
+
+/* Logout Button Styles */
+.logout-btn {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #555;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.logout-btn:hover {
+  background-color: #777;
+}
+
+/* Account Icon Styles */
+.account-icon {
+  cursor: pointer;
+  font-size: 24px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+/* Error Message Styles */
+.error {
+  color: red;
+  margin-bottom: 20px;
+}
+
+/* Report Description Styles */
+.report-description {
+  margin-bottom: 20px;
+}
+
+/* Reviews Container Styles */
+.reviews-container {
+  height: auto;
+  max-height: none;
+}
+
+.reviewer-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+}
+
+.account-menu {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 10;
+}
+
+.account-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 10px;
+}
+
+.account-dropdown button {
+  display: block;
+  width: 100%;
+  padding: 5px 10px;
+  text-align: left;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.account-dropdown button:hover {
+  background-color: #f0f0f0;
+}
