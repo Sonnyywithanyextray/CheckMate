@@ -6,8 +6,20 @@ import { AnimatePresence } from 'framer-motion';
 import Dashboard from './Dashboard';
 import Reviewer from './Reviewer';
 import PrivateRoute from './components/PrivateRoute';
-import App from './App'; 
-import Register from './Register'; 
+import App from './App';
+import Register from './Register';
+import Footer from './Footer';
+
+function Layout({ children }) {
+  return (
+    <div className="app-container">
+      <div className="content">
+        {children}
+      </div>
+      <Footer />
+    </div>
+  );
+}
 
 function AnimatedRoutes() {
   const location = useLocation();
@@ -16,21 +28,21 @@ function AnimatedRoutes() {
     <AnimatePresence mode="wait">
       <Routes location={location} key={location.pathname}>
         {/* Protected Routes */}
-        <Route 
-          path="/dashboard" 
+        <Route
+          path="/dashboard"
           element={
             <PrivateRoute>
               <Dashboard />
             </PrivateRoute>
-          } 
+          }
         />
-        <Route 
-          path="/reviewer/:reportId" 
+        <Route
+          path="/reviewer/:reportId"
           element={
             <PrivateRoute>
               <Reviewer />
             </PrivateRoute>
-          } 
+          }
         />
 
         {/* Public Routes */}
@@ -44,7 +56,9 @@ function AnimatedRoutes() {
 function AppRoutes() {
   return (
     <Router>
-      <AnimatedRoutes />
+      <Layout>
+        <AnimatedRoutes />
+      </Layout>
     </Router>
   );
 }

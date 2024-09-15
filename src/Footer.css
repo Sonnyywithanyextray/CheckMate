@@ -1,0 +1,28 @@
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #333; /* Dark background for contrast */
+    text-align: center;
+    padding: 10px 0;
+    font-size: 14px;
+    border-top: 1px solid #444;
+  }
+  
+  .footer a {
+    text-decoration: none;
+  }
+  
+  .footer-text {
+    color: white;
+  }
+  
+  .footer-highlight {
+    color: #2EC1AC; /* The hexcode you specified */
+  }
+  
+  .footer a:hover .footer-text,
+  .footer a:hover .footer-highlight {
+    text-decoration: underline;
+  }

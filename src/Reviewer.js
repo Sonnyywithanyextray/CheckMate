@@ -15,6 +15,7 @@ import { FaArrowLeft } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 import './Reviewer.css';
 import './LogoutButton.css';
+import Footer from './Footer';
 
 function Reviewer() {
   const { reportId } = useParams();

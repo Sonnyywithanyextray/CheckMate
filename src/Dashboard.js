@@ -7,6 +7,7 @@ import { collection, addDoc, query, where, onSnapshot, serverTimestamp } from 'f
 import { signOut } from "firebase/auth";
 import './Dashboard.css';
 import './LogoutButton.css';
+import Footer from './Footer';
 
 function Dashboard() {
   const { currentUser } = useContext(AuthContext);
