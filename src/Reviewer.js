@@ -11,9 +11,10 @@ import {
 } from 'firebase/firestore';
 import { signOut } from "firebase/auth";
 import { AuthContext } from './context/AuthContext';
-import { FaArrowLeft, FaUserCircle } from 'react-icons/fa';
+import { FaArrowLeft } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 import './Reviewer.css';
+import './LogoutButton.css';
 
 function Reviewer() {
   const { reportId } = useParams();
@@ -25,7 +26,6 @@ function Reviewer() {
   const [conclusions, setConclusions] = useState('');
   const [error, setError] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
-  const [showDropdown, setShowDropdown] = useState(false);
 
   useEffect(() => {
     const fetchReport = async () => {
@@ -68,7 +68,6 @@ function Reviewer() {
       return;
     }
     try {
-      // Create the review
       const reviewDocRef = await addDoc(collection(firestore, 'reviews'), {
         reportId: report.id,
         reviewedBy: currentUser.uid,
@@ -77,21 +76,20 @@ function Reviewer() {
         createdAt: serverTimestamp(),
       });
       console.log('Review added with ID:', reviewDocRef.id);
-  
-      // Update the report
+
       const reportRef = doc(firestore, 'reports', report.id);
       const updatePayload = {
         status: 'reviewed',
         result: classifyConclusion(conclusions),
         updatedAt: serverTimestamp(),
       };
-  
+
       await updateDoc(reportRef, updatePayload);
       console.log('Report updated successfully with payload:', updatePayload);
-  
+
       setError(null);
       setSuccessMessage('Review submitted successfully!');
-  
+
       setTimeout(() => {
         navigate('/Dashboard');
       }, 2000);
@@ -101,7 +99,7 @@ function Reviewer() {
       setSuccessMessage(null);
     }
   };
-    
+
   const classifyConclusion = (text) => {
     const lowerText = text.toLowerCase();
     if (lowerText.includes('misinformation')) return 'misinformation';
@@ -146,6 +144,9 @@ function Reviewer() {
       >
         <FaArrowLeft />
       </button>
+      <div className="logout-container">
+        <button onClick={handleLogout} className="logout-btn">Logout</button>
+      </div>
       <motion.div
         className="reviewer-wrapper"
         initial="initial"
@@ -196,17 +197,6 @@ function Reviewer() {
               <p>Loading report...</p>
             )}
           </div>
-        </div>
-        <div className="account-menu">
-          <FaUserCircle 
-            className="account-icon" 
-            onClick={() => setShowDropdown(!showDropdown)} 
-          />
-          {showDropdown && (
-            <div className="account-dropdown">
-              <button onClick={handleLogout}>Logout</button>
-            </div>
-          )}
         </div>
       </motion.div>
     </>
